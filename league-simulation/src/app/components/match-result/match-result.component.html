@@ -1,4 +1,6 @@
 <div class="match-results">
+  <button *ngIf="!seasonStarted" (click)="startSeason()">Sezona Başla</button>
+  <div *ngIf="seasonStarted">
     <h2>Hafta {{ currentWeek }} Maç Sonuçları</h2>
     <table>
       <thead>
@@ -9,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let match of getCurrentWeekResults()">
+        <tr *ngFor="let match of matchResults.slice((currentWeek-1)*2, currentWeek*2)">
           <td>{{ match.homeTeam }}</td>
           <td>{{ match.homeScore }} - {{ match.awayScore }}</td>
           <td>{{ match.awayTeam }}</td>
@@ -18,4 +20,4 @@
     </table>
     <button (click)="nextWeek()" [disabled]="currentWeek >= totalWeeks">Sonraki Hafta</button>
   </div>
-  
+</div>

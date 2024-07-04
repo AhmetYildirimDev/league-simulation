@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Match } from '../../interfaces/match.interface';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-match-result',
@@ -11,44 +12,46 @@ import { Match } from '../../interfaces/match.interface';
 })
 export class MatchResultComponent {
   @Output() resultsUpdated = new EventEmitter<Match[]>();
-
   matchResults: Match[] = [];
   currentWeek: number = 1;
   totalWeeks: number = 6;
+  seasonStarted: boolean = false;
+  fixtures: Match[][] = [];
 
-  constructor() {
-    this.generateMatches();
+  constructor(private matchService: MatchService) {}
+
+  startSeason() {
+    this.seasonStarted = true;
+    this.generateFixtures();
+    this.playWeek();
   }
 
-  generateMatches() {
+  generateFixtures() {
     const teams = ['Fenerbahçe', 'Galatasaray', 'Beşiktaş', 'Sivasspor'];
-    const schedule = [
-      { home: 0, away: 1 }, // Week 1
-      { home: 2, away: 3 },
-      { home: 0, away: 2 }, // Week 2
-      { home: 1, away: 3 },
-      { home: 0, away: 3 }, // Week 3
-      { home: 1, away: 2 },
-      { home: 1, away: 0 }, // Week 4
-      { home: 3, away: 2 },
-      { home: 2, away: 0 }, // Week 5
-      { home: 3, away: 1 },
-      { home: 3, away: 0 }, // Week 6
-      { home: 2, away: 1 },
-    ];
+    const fixtures: Match[][] = [];
 
     for (let week = 0; week < this.totalWeeks; week++) {
-      for (let matchIndex = 0; matchIndex < 2; matchIndex++) {
-        const match = schedule[week * 2 + matchIndex];
-        this.matchResults.push({
-          homeTeam: teams[match.home],
-          homeScore: this.randomScore(),
-          awayTeam: teams[match.away],
-          awayScore: this.randomScore()
-        });
+      const weekFixtures: Match[] = [];
+      if (week % 2 === 0) {
+        weekFixtures.push({ homeTeam: teams[0], homeScore: 0, awayTeam: teams[1], awayScore: 0 });
+        weekFixtures.push({ homeTeam: teams[2], homeScore: 0, awayTeam: teams[3], awayScore: 0 });
+      } else {
+        weekFixtures.push({ homeTeam: teams[0], homeScore: 0, awayTeam: teams[2], awayScore: 0 });
+        weekFixtures.push({ homeTeam: teams[1], homeScore: 0, awayTeam: teams[3], awayScore: 0 });
       }
+      fixtures.push(weekFixtures);
     }
-    this.resultsUpdated.emit(this.getCurrentWeekResults());
+    this.fixtures = fixtures;
+  }
+
+  playWeek() {
+    const weekFixtures = this.fixtures[this.currentWeek - 1];
+    weekFixtures.forEach(match => {
+      match.homeScore = this.randomScore();
+      match.awayScore = this.randomScore();
+      this.matchResults.push(match);
+    });
+    this.matchService.updateMatchResults(this.matchResults);
   }
 
   randomScore(): number {
@@ -58,11 +61,7 @@ export class MatchResultComponent {
   nextWeek() {
     if (this.currentWeek < this.totalWeeks) {
       this.currentWeek++;
-      this.resultsUpdated.emit(this.getCurrentWeekResults());
+      this.playWeek();
     }
-  }
-
-  getCurrentWeekResults(): Match[] {
-    return this.matchResults.slice((this.currentWeek - 1) * 2, this.currentWeek * 2);
   }
 }

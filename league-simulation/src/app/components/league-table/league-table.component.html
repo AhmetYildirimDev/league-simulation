@@ -1,28 +1,27 @@
 <div class="league-table">
-    <h2>Puan Durumu</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Takım</th>
-          <th>O</th>
-          <th>G</th>
-          <th>B</th>
-          <th>M</th>
-          <th>AV</th>
-          <th>P</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let team of teams">
-          <td>{{ team.name }}</td>
-          <td>{{ team.played }}</td>
-          <td>{{ team.won }}</td>
-          <td>{{ team.drawn }}</td>
-          <td>{{ team.lost }}</td>
-          <td>{{ team.goalDifference }}</td>
-          <td>{{ team.points }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <h2>Puan Durumu</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Takım</th>
+        <th>O</th>
+        <th>G</th>
+        <th>B</th>
+        <th>M</th>
+        <th>AV</th>
+        <th>P</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of teams">
+        <td>{{ team.name }}</td>
+        <td>{{ team.played }}</td>
+        <td>{{ team.won }}</td>
+        <td>{{ team.drawn }}</td>
+        <td>{{ team.lost }}</td>
+        <td>{{ team.goalsFor - team.goalsAgainst }}</td>
+        <td>{{ team.points }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

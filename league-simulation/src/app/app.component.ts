@@ -20,15 +20,34 @@ import { Team } from './interfaces/team.interface'; // Team arayüzünü ekleyin
 })
 export class AppComponent {
   teams: Team[] = [
-    { name: 'Fenerbahçe', points: 0, played: 0, won: 0, drawn: 0, lost: 0, goalDifference: 0 },
-    { name: 'Galatasaray', points: 0, played: 0, won: 0, drawn: 0, lost: 0, goalDifference: 0 },
-    { name: 'Beşiktaş', points: 0, played: 0, won: 0, drawn: 0, lost: 0, goalDifference: 0 },
-    { name: 'Sivasspor', points: 0, played: 0, won: 0, drawn: 0, lost: 0, goalDifference: 0 }
+    { name: 'Fenerbahçe', played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0, points: 0 },
+    { name: 'Galatasaray', played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0, points: 0 },
+    { name: 'Sivasspor', played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0, points: 0 },
+    { name: 'Beşiktaş', played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0, points: 0 }
   ];
 
   currentWeek: number = 1;
   totalWeeks: number = 6;
-  matchResults: Match[] = [];
+  matchResults: Match[] = [
+    // 1. Hafta
+    { homeTeam: 'Fenerbahçe', awayTeam: 'Galatasaray', homeScore: 0, awayScore: 0 },
+    { homeTeam: 'Sivasspor', awayTeam: 'Beşiktaş', homeScore: 0, awayScore: 0 },
+    // 2. Hafta
+    { homeTeam: 'Fenerbahçe', awayTeam: 'Beşiktaş', homeScore: 0, awayScore: 0 },
+    { homeTeam: 'Galatasaray', awayTeam: 'Sivasspor', homeScore: 0, awayScore: 0 },
+    // 3. Hafta
+    { homeTeam: 'Fenerbahçe', awayTeam: 'Sivasspor', homeScore: 0, awayScore: 0 },
+    { homeTeam: 'Galatasaray', awayTeam: 'Beşiktaş', homeScore: 0, awayScore: 0 },
+    // 4. Hafta (Deplasman-Ev sahibi değişikliği)
+    { homeTeam: 'Galatasaray', awayTeam: 'Fenerbahçe', homeScore: 0, awayScore: 0 },
+    { homeTeam: 'Beşiktaş', awayTeam: 'Sivasspor', homeScore: 0, awayScore: 0 },
+    // 5. Hafta
+    { homeTeam: 'Beşiktaş', awayTeam: 'Fenerbahçe', homeScore: 0, awayScore: 0 },
+    { homeTeam: 'Sivasspor', awayTeam: 'Galatasaray', homeScore: 0, awayScore: 0 },
+    // 6. Hafta
+    { homeTeam: 'Sivasspor', awayTeam: 'Fenerbahçe', homeScore: 0, awayScore: 0 },
+    { homeTeam: 'Beşiktaş', awayTeam: 'Galatasaray', homeScore: 0, awayScore: 0 }
+  ];
 
   updateTeams(matches: Match[]) {
     // Puanları ve istatistikleri sıfırla
@@ -37,6 +56,8 @@ export class AppComponent {
       team.won = 0;
       team.drawn = 0;
       team.lost = 0;
+      team.goalsFor = 0;
+      team.goalsAgainst = 0;
       team.goalDifference = 0;
       team.points = 0;
     });
@@ -49,6 +70,11 @@ export class AppComponent {
       if (homeTeam && awayTeam) {
         homeTeam.played++;
         awayTeam.played++;
+
+        homeTeam.goalsFor += match.homeScore;
+        homeTeam.goalsAgainst += match.awayScore;
+        awayTeam.goalsFor += match.awayScore;
+        awayTeam.goalsAgainst += match.homeScore;
 
         if (match.homeScore > match.awayScore) {
           homeTeam.won++;
@@ -65,9 +91,14 @@ export class AppComponent {
           awayTeam.points += 1;
         }
 
-        homeTeam.goalDifference += match.homeScore - match.awayScore;
-        awayTeam.goalDifference += match.awayScore - match.homeScore;
+        if (homeTeam.goalDifference !== undefined && awayTeam.goalDifference !== undefined) {
+          homeTeam.goalDifference += match.homeScore - match.awayScore;
+          awayTeam.goalDifference += match.awayScore - match.homeScore;
+        }
       }
     });
+
+    // Haftalık maç sonuçlarını güncelle
+    this.matchResults = matches;
   }
 }
