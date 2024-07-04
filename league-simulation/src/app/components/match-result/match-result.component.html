@@ -1,0 +1,21 @@
+<div class="match-results">
+    <h2>Hafta {{ currentWeek }} Maç Sonuçları</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ev Sahibi</th>
+          <th>Skor</th>
+          <th>Deplasman</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of getCurrentWeekResults()">
+          <td>{{ match.homeTeam }}</td>
+          <td>{{ match.homeScore }} - {{ match.awayScore }}</td>
+          <td>{{ match.awayTeam }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="nextWeek()" [disabled]="currentWeek >= totalWeeks">Sonraki Hafta</button>
+  </div>
+  
