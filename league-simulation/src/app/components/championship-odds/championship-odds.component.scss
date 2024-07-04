@@ -1,0 +1,18 @@
+.championship-odds {
+    h2 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      thead {
+        background-color: #f0f0f0;
+      }
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+    }
+  }
+  

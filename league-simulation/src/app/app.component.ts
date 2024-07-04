@@ -4,16 +4,18 @@ import { MatchResultComponent } from './components/match-result/match-result.com
 import { CommonModule } from '@angular/common';
 import { Match } from './interfaces/match.interface';
 import { Team } from './interfaces/team.interface'; // Team arayüzünü ekleyin
+import { ChampionshipOddsComponent } from './components/championship-odds/championship-odds.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, LeagueTableComponent, MatchResultComponent],
+  imports: [CommonModule, LeagueTableComponent, MatchResultComponent, ChampionshipOddsComponent],
   template: `
     <div>
       <h1>Lig Simülasyonu</h1>
       <app-league-table [teams]="teams"></app-league-table>
       <app-match-result (resultsUpdated)="updateTeams($event)"></app-match-result>
+      <app-championship-odds [teams]="teams"></app-championship-odds>
     </div>
   `,
   styleUrls: ['./app.component.scss']
