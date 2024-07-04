@@ -1,23 +1,23 @@
 <div class="match-results">
-  <button *ngIf="!seasonStarted" (click)="startSeason()">Sezona Başla</button>
+  <p-button *ngIf="!seasonStarted" (onClick)="startSeason()" label="Sezona Başla"></p-button>
   <div *ngIf="seasonStarted">
     <h2>Hafta {{ currentWeek }} Maç Sonuçları</h2>
-    <table>
-      <thead>
+    <p-table [value]="matchResults.slice((currentWeek-1)*2, currentWeek*2)">
+      <ng-template pTemplate="header">
         <tr>
           <th>Ev Sahibi</th>
           <th>Skor</th>
           <th>Deplasman</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let match of matchResults.slice((currentWeek-1)*2, currentWeek*2)">
+      </ng-template>
+      <ng-template pTemplate="body" let-match>
+        <tr>
           <td>{{ match.homeTeam }}</td>
           <td>{{ match.homeScore }} - {{ match.awayScore }}</td>
           <td>{{ match.awayTeam }}</td>
         </tr>
-      </tbody>
-    </table>
-    <button (click)="nextWeek()" [disabled]="currentWeek >= totalWeeks">Sonraki Hafta</button>
+      </ng-template>
+    </p-table>
+    <p-button (onClick)="nextWeek()" [disabled]="currentWeek >= totalWeeks" label="Sonraki Hafta"></p-button>
   </div>
 </div>

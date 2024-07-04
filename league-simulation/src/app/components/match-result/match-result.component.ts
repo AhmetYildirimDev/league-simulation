@@ -2,16 +2,17 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Match } from '../../interfaces/match.interface';
 import { MatchService } from '../../services/match.service';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-match-result',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TableModule, ButtonModule],
   templateUrl: './match-result.component.html',
   styleUrls: ['./match-result.component.scss']
 })
 export class MatchResultComponent {
-  @Output() resultsUpdated = new EventEmitter<Match[]>();
   matchResults: Match[] = [];
   currentWeek: number = 1;
   totalWeeks: number = 6;
@@ -27,7 +28,6 @@ export class MatchResultComponent {
   }
 
   generateFixtures() {
-    const teams = ['Fenerbahçe', 'Galatasaray', 'Beşiktaş', 'Sivasspor'];
     const fixtures: Match[][] = [];
 
     fixtures.push(

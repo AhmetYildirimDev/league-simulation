@@ -1,7 +1,7 @@
 <div class="league-table">
   <h2>Puan Durumu</h2>
-  <table>
-    <thead>
+  <p-table [value]="teams">
+    <ng-template pTemplate="header">
       <tr>
         <th>Takım</th>
         <th>O</th>
@@ -11,9 +11,9 @@
         <th>AV</th>
         <th>P</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let team of teams">
+    </ng-template>
+    <ng-template pTemplate="body" let-team>
+      <tr>
         <td>{{ team.name }}</td>
         <td>{{ team.played }}</td>
         <td>{{ team.won }}</td>
@@ -22,6 +22,6 @@
         <td>{{ team.goalsFor - team.goalsAgainst }}</td>
         <td>{{ team.points }}</td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+  </p-table>
 </div>

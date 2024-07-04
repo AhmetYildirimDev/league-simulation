@@ -1,18 +1,18 @@
 <div class="championship-odds">
     <h2>Şampiyonluk Olasılıkları</h2>
-    <table>
-      <thead>
+    <p-table [value]="championshipOdds">
+      <ng-template pTemplate="header">
         <tr>
           <th>Takım</th>
           <th>Olasılık (%)</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let odds of championshipOdds">
+      </ng-template>
+      <ng-template pTemplate="body" let-odds>
+        <tr>
           <td>{{ odds.team }}</td>
           <td>{{ odds.odds.toFixed(2) }}%</td>
         </tr>
-      </tbody>
-    </table>
+      </ng-template>
+    </p-table>
   </div>
   
