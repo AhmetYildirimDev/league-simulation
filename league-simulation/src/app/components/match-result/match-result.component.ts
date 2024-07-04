@@ -30,17 +30,33 @@ export class MatchResultComponent {
     const teams = ['Fenerbahçe', 'Galatasaray', 'Beşiktaş', 'Sivasspor'];
     const fixtures: Match[][] = [];
 
-    for (let week = 0; week < this.totalWeeks; week++) {
-      const weekFixtures: Match[] = [];
-      if (week % 2 === 0) {
-        weekFixtures.push({ homeTeam: teams[0], homeScore: 0, awayTeam: teams[1], awayScore: 0 });
-        weekFixtures.push({ homeTeam: teams[2], homeScore: 0, awayTeam: teams[3], awayScore: 0 });
-      } else {
-        weekFixtures.push({ homeTeam: teams[0], homeScore: 0, awayTeam: teams[2], awayScore: 0 });
-        weekFixtures.push({ homeTeam: teams[1], homeScore: 0, awayTeam: teams[3], awayScore: 0 });
-      }
-      fixtures.push(weekFixtures);
-    }
+    fixtures.push(
+      [
+        { homeTeam: 'Fenerbahçe', awayTeam: 'Galatasaray', homeScore: 0, awayScore: 0 },
+        { homeTeam: 'Beşiktaş', awayTeam: 'Sivasspor', homeScore: 0, awayScore: 0 }
+      ],
+      [
+        { homeTeam: 'Fenerbahçe', awayTeam: 'Beşiktaş', homeScore: 0, awayScore: 0 },
+        { homeTeam: 'Galatasaray', awayTeam: 'Sivasspor', homeScore: 0, awayScore: 0 }
+      ],
+      [
+        { homeTeam: 'Fenerbahçe', awayTeam: 'Sivasspor', homeScore: 0, awayScore: 0 },
+        { homeTeam: 'Galatasaray', awayTeam: 'Beşiktaş', homeScore: 0, awayScore: 0 }
+      ],
+      [
+        { homeTeam: 'Galatasaray', awayTeam: 'Fenerbahçe', homeScore: 0, awayScore: 0 },
+        { homeTeam: 'Sivasspor', awayTeam: 'Beşiktaş', homeScore: 0, awayScore: 0 }
+      ],
+      [
+        { homeTeam: 'Beşiktaş', awayTeam: 'Fenerbahçe', homeScore: 0, awayScore: 0 },
+        { homeTeam: 'Sivasspor', awayTeam: 'Galatasaray', homeScore: 0, awayScore: 0 }
+      ],
+      [
+        { homeTeam: 'Sivasspor', awayTeam: 'Fenerbahçe', homeScore: 0, awayScore: 0 },
+        { homeTeam: 'Beşiktaş', awayTeam: 'Galatasaray', homeScore: 0, awayScore: 0 }
+      ]
+    );
+
     this.fixtures = fixtures;
   }
 
