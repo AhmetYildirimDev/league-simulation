@@ -71,7 +71,7 @@ export class MatchResultComponent {
   }
 
   randomScore(): number {
-    return Math.floor(Math.random() * 5); // Random score between 0 and 4
+    return Math.floor(Math.random() * 5);
   }
 
   nextWeek() {
